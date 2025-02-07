@@ -1,5 +1,4 @@
 # epoch-hesaplama
-Bu program, girilen iki tarih arasındaki Epoch zaman farkını hesaplar.  
 Epoch Zamanı ve Tarih Farkı Hesaplayıcı
 
 Bu program, girilen iki tarih arasındaki Epoch zaman farkını hesaplar.
