@@ -1,100 +1,147 @@
 #include <stdio.h>
 #include <time.h>
 
-// Tarih bilgilerini tutacak struct
-struct Date {
-    int year;
-    int month;
-    int day;
+// tarih bilgilerini tutacak struct 
+struct Tarih{
+	int yil,ay,gun;
+	
 };
 
-// Saat bilgilerini tutacak struct
-struct Time {
-    int hour;
-    int minute;
-    int second;
+// saat bilgilerini tutacak struct 
+struct Zaman{
+	int saat,dakika,saniye;
+	
 };
+
 
 // Tarih ve saat bilgilerini birlestiren union
-union DateTime {
-    struct {
-        struct Date date;
-        struct Time time;
-    } dt;
-    time_t epoch;
+// Bu union, iki farklı veri temsilini aynı bellek alanında saklamayı sağlıyor:
+union TarihZaman{
+	struct{
+		struct Tarih tarih;
+		struct Zaman zaman;
+		
+	} tarihZaman;
+	
+	time_t epoch; // time_t, zamana dair bilgileri saniye cinsinden saklayan bir veri türüdür.
+	// Epoch zamanı, 1 Ocak 1970 00:00:00 UTC'den itibaren geçen toplam saniye sayısıdır.
 };
 
-// Tarih ve saat bilgilerini epoch'a ceviren fonksiyon
-time_t convertToEpoch(struct Date date, struct Time time) {
-    struct tm timeinfo = {0};
-    timeinfo.tm_year = date.year - 1900;  // tm_year 1900'den baslar
-    timeinfo.tm_mon = date.month - 1;     // tm_mon 0'dan baslar
-    timeinfo.tm_mday = date.day;
-    timeinfo.tm_hour = time.hour;
-    timeinfo.tm_min = time.minute;
-    timeinfo.tm_sec = time.second;
+// Tarih ve saat bilgilerini epoch'a çeviren fonksiyon
+time_t EpochaCevir(struct Tarih tarih, struct Zaman zaman) {
+    struct tm tm_zaman;
     
-    return mktime(&timeinfo);
+    tm_zaman.tm_year = tarih.yil - 1900; // Yıl 1900'den itibaren hesaplanır
+    tm_zaman.tm_mon = tarih.ay - 1;      // Ay 0'dan başlar, 1 çıkarılır
+    tm_zaman.tm_mday = tarih.gun;
+    tm_zaman.tm_hour = zaman.saat;
+    tm_zaman.tm_min = zaman.dakika;
+    tm_zaman.tm_sec = zaman.saniye;
+    
+    return mktime(&tm_zaman); // mktime ile epoch zamanına çevir
 }
 
-int main() {
-    union DateTime dt1, dt2;
-    
+int main(){
+	union TarihZaman tarihZaman1, tarihZaman2;
+	
+	
     printf("EPOCH ZAMANI VE TARIH FARKI HESAPLAYICI \n\n");
     
-   /* Epoch nedir?
+	/* Epoch nedir?
    Epoch (Unix zamani), 1 Ocak 1970 00:00:00 UTC'den bu yana gecen saniye sayisidir.
    Bu, bilgisayar sistemlerinde zamani temsil etmek icin kullanilan standart bir yontemdir. */
     
     // Ilk tarih icin giris
     printf("Ilk tarihi giriniz:\n");
+    
     printf("Yil: ");
-    scanf("%d", &dt1.dt.date.year);
+    scanf("%d", &tarihZaman1.tarihZaman.tarih.yil); 
+	if (tarihZaman1.tarihZaman.tarih.yil < 1970) {
+        printf("Hata! Yil 1970'ten kucuk olamaz! Tekrar deneyiniz! \n");
+    }
+    
     printf("Ay (1-12): ");
-    scanf("%d", &dt1.dt.date.month);
+    scanf("%d", &tarihZaman1.tarihZaman.tarih.ay);
+    if (tarihZaman1.tarihZaman.tarih.ay < 1 || tarihZaman1.tarihZaman.tarih.ay > 12) {
+        printf("Hata! Ay 1 ile 12 arasinda olmalidir! Tekrar deneyiniz! \n");
+    }
+    
     printf("Gun: ");
-    scanf("%d", &dt1.dt.date.day);
+    scanf("%d", &tarihZaman1.tarihZaman.tarih.gun);
+     if (tarihZaman1.tarihZaman.tarih.gun < 1 || tarihZaman1.tarihZaman.tarih.gun > 31) {
+        printf("Hata! Gun 1 ile 31 arasinda olmalidir! Tekrar deneyiniz! \n");
+    }
+    
     printf("Saat: ");
-    scanf("%d", &dt1.dt.time.hour);
+    scanf("%d", &tarihZaman1.tarihZaman.zaman.saat);
+	if (tarihZaman1.tarihZaman.zaman.saat < 0 || tarihZaman1.tarihZaman.zaman.saat > 23) {
+        printf("Hata! Saat 0 ile 23 arasinda olmalidir! Tekrar deneyiniz! \n");
+    }
+    
     printf("Dakika: ");
-    scanf("%d", &dt1.dt.time.minute);
+    scanf("%d", &tarihZaman1.tarihZaman.zaman.dakika);
+	if (tarihZaman1.tarihZaman.zaman.dakika < 0 || tarihZaman1.tarihZaman.zaman.dakika > 59) {
+        printf("Hata! Dakika 0 ile 59 arasinda olmalidir! Tekrar deneyiniz! \n");
+    }
+    
     printf("Saniye: ");
-    scanf("%d", &dt1.dt.time.second);
+    scanf("%d", &tarihZaman1.tarihZaman.zaman.saniye);
+    if (tarihZaman1.tarihZaman.zaman.saniye < 0 || tarihZaman1.tarihZaman.zaman.saniye > 59) {
+        printf("Hata! Saniye 0 ile 59 arasinda olmalidir!Tekrar deneyiniz! \n");
+    }
     
     // Ikinci tarih icin giris
     printf("\nIkinci tarihi giriniz:\n");
+    
     printf("Yil: ");
-    scanf("%d", &dt2.dt.date.year);
+    scanf("%d", &tarihZaman2.tarihZaman.tarih.yil);
+    if (tarihZaman1.tarihZaman.tarih.yil < 1970) {
+        printf("Hata! Yil 1970'ten kucuk olamaz! Tekrar deneyiniz! \n");
+    }
+    
     printf("Ay (1-12): ");
-    scanf("%d", &dt2.dt.date.month);
+    scanf("%d", &tarihZaman2.tarihZaman.tarih.ay);
+    if (tarihZaman1.tarihZaman.tarih.ay < 1 || tarihZaman1.tarihZaman.tarih.ay > 12) {
+        printf("Hata! Ay 1 ile 12 arasinda olmalidir! Tekrar deneyiniz! \n");
+    }
+    
     printf("Gun: ");
-    scanf("%d", &dt2.dt.date.day);
+    scanf("%d", &tarihZaman2.tarihZaman.tarih.gun);
+     if (tarihZaman1.tarihZaman.tarih.gun < 1 || tarihZaman1.tarihZaman.tarih.gun > 31) {
+        printf("Hata! Gun 1 ile 31 arasinda olmalidir! Tekrar deneyiniz! \n");
+    }
+    
     printf("Saat: ");
-    scanf("%d", &dt2.dt.time.hour);
+    scanf("%d", &tarihZaman2.tarihZaman.zaman.saat);
+	if (tarihZaman1.tarihZaman.zaman.saat < 0 || tarihZaman1.tarihZaman.zaman.saat > 23) {
+        printf("Hata! Saat 0 ile 23 arasinda olmalidir! Tekrar deneyiniz! \n");
+    }
+    
+    
+    
     printf("Dakika: ");
-    scanf("%d", &dt2.dt.time.minute);
+    scanf("%d", &tarihZaman2.tarihZaman.zaman.dakika);    
+	if (tarihZaman1.tarihZaman.zaman.dakika < 0 || tarihZaman1.tarihZaman.zaman.dakika > 59) {
+        printf("Hata! Dakika 0 ile 59 arasinda olmalidir! Tekrar deneyiniz! \n");
+    }
+    
     printf("Saniye: ");
-    scanf("%d", &dt2.dt.time.second);
+    scanf("%d", &tarihZaman2.tarihZaman.zaman.saniye);
+    if (tarihZaman1.tarihZaman.zaman.saniye < 0 || tarihZaman1.tarihZaman.zaman.saniye > 59) {
+        printf("Hata! Saniye 0 ile 59 arasinda olmalidir!Tekrar deneyiniz! \n");
+    }
     
-    // Tarihleri epoch'a cevirme
-    time_t epoch1 = convertToEpoch(dt1.dt.date, dt1.dt.time);
-    time_t epoch2 = convertToEpoch(dt2.dt.date, dt2.dt.time);
+    // Tarihleri epoch'a çevirme  
+    tarihZaman1.epoch = EpochaCevir(tarihZaman1.tarihZaman.tarih, tarihZaman1.tarihZaman.zaman);
+    tarihZaman2.epoch = EpochaCevir(tarihZaman2.tarihZaman.tarih, tarihZaman2.tarihZaman.zaman);
+
+    // Epoch farkını hesaplama  
+    time_t fark = difftime(tarihZaman2.epoch, tarihZaman1.epoch);
+
+    printf("\nIlk tarih epoch: %lld\n", (long long)tarihZaman1.epoch);
+    printf("Ikinci tarih epoch: %lld\n", (long long)tarihZaman2.epoch);
+    printf("Iki tarih arasindaki fark (saniye): %lld\n", (long long)fark);
+
     
-    // Sonuclari yazdirma
-    printf("\n SONUCLAR \n");
-    printf("Ilk tarih epoch degeri: %ld\n", (long)epoch1);
-    printf("Ikinci tarih epoch degeri: %ld\n", (long)epoch2);
-    printf("Iki tarih arasindaki fark (saniye): %ld\n", (long)difftime(epoch2, epoch1));
-    
-    // Farki gun, saat, dakika ve saniye olarak gosterme
-    long diff = labs((long)difftime(epoch2, epoch1));
-    int days = diff / (24 * 3600);
-    int hours = (diff % (24 * 3600)) / 3600;
-    int minutes = (diff % 3600) / 60;
-    int seconds = diff % 60;
-    
-    printf("Fark: %d gun, %d saat, %d dakika, %d saniye\n", 
-           days, hours, minutes, seconds);
-    
-    return 0;
 }
+
