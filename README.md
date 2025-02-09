@@ -65,4 +65,4 @@ Katkıda Bulunanlar
 edaaerol - GitHub Profili
 
 Lisans
-Bu proje MIT Lisansı ile lisanslanmıştır.
+Bu proje MIT Lisansı ile lisanslanmıştır. Daha fazla bilgi için LICENSE dosyasına bakın.
