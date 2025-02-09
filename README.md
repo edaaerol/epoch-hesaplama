@@ -1,39 +1,68 @@
-#EPOCH Zaman Hesaplayıcı
+Epoch Hesaplama
+Bu proje, iki tarih ve zaman arasındaki farkı saniye cinsinden hesaplayan bir C programı içerir. Epoch zamanı, 1 Ocak 1970 00:00:00 UTC'den itibaren geçen toplam saniye sayısıdır. Bu program, kullanıcıdan tarih ve zaman bilgilerini alır ve bu bilgileri Epoch zamanına çevirir.
 
-Bu proje, iki farklı tarih ve saat bilgisini alarak bunları Unix epoch zamanına çevirir ve aralarındaki farkı hesaplar.
-
-
+İçindekiler
+Kurulum
 Kullanım
+Fonksiyonlar
+Katkıda Bulunanlar
+Lisans
+Kurulum
 
-Programı çalıştırın.
+Bu projeyi yerel makinenizde çalıştırmak için aşağıdaki adımları izleyin:
 
-İlk tarih ve saat bilgilerini girin.
+Bu depoyu klonlayın:
 
-İkinci tarih ve saat bilgilerini girin.
+git clone https://github.com/edaaerol/epoch-hesaplama.git
+Ana dizine gidin:
 
-Program, girilen tarihleri epoch zamanına çevirerek iki tarih arasındaki farkı saniye cinsinden hesaplar ve ekrana yazdırır.
+cd epoch-hesaplama
+Programı derleyin:
 
+gcc main.c -o epoch_hesaplama
+Kullanım
+Programı çalıştırmak için aşağıdaki komutu kullanın:
 
-Yapı
+./epoch_hesaplama
 
-struct Tarih: Yıl, ay ve günü tutar.
+Program çalıştığında, iki farklı tarih ve zaman bilgisi girmenizi isteyecektir. Girdiğiniz değerler doğrulandıktan sonra, program bu tarihleri Epoch zamanına çevirir ve aralarındaki farkı saniye cinsinden hesaplar.
 
-struct Zaman: Saat, dakika ve saniyeyi tutar.
+Girdi Örneği:
+Code
+Ilk tarihi giriniz:
+Yil: 2023
+Ay (1-12): 5
+Gun: 15
+Saat: 12
+Dakika: 30
+Saniye: 45
 
-union TarihZaman: Hem tarih/saat bilgilerini hem de epoch zamanını tek bir bellekte saklar.
+Ikinci tarihi giriniz:
+Yil: 2025
+Ay (1-12): 10
+Gun: 20
+Saat: 14
+Dakika: 45
+Saniye: 30
 
-EpochaCevir(): Tarih ve saat bilgisini epoch zamanına çevirir.
+Çıktı Örneği:
+Ilk tarih epoch: 1684247445
+Ikinci tarih epoch: 1760971530
+Iki tarih arasindaki fark (saniye): 76724085
 
+Fonksiyonlar
+EpochaCevir(struct Tarih tarih, struct Zaman zaman)
+Bu fonksiyon, verilen tarih ve zaman bilgilerini Epoch zamanına çevirir.
 
-Notlar
+Parametreler:
+struct Tarih tarih: Yıl, ay ve gün bilgilerini içeren struct.
+struct Zaman zaman: Saat, dakika ve saniye bilgilerini içeren struct.
 
-Yıl 1970'ten küçük olamaz.
+Dönüş Değeri:
+time_t: Epoch zamanını temsil eden saniye cinsinden değer.
 
-Ay 1 ile 12 arasında olmalıdır.
+Katkıda Bulunanlar
+edaaerol - GitHub Profili
 
-Gün 1 ile 31 arasında olmalıdır.
-
-Saat 0 ile 23 arasında olmalıdır.
-
-Dakika ve saniye 0 ile 59 arasında olmalıdır.
-
+Lisans
+Bu proje MIT Lisansı ile lisanslanmıştır. Daha fazla bilgi için LICENSE dosyasına bakın.
