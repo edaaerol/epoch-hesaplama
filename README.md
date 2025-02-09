@@ -2,24 +2,11 @@ Epoch Hesaplama
 Bu proje, iki tarih ve zaman arasındaki farkı saniye cinsinden hesaplayan bir C programı içerir. Epoch zamanı, 1 Ocak 1970 00:00:00 UTC'den itibaren geçen toplam saniye sayısıdır. Bu program, kullanıcıdan tarih ve zaman bilgilerini alır ve bu bilgileri Epoch zamanına çevirir.
 
 İçindekiler
-Kurulum
 Kullanım
 Fonksiyonlar
 Katkıda Bulunanlar
 Lisans
-Kurulum
 
-Bu projeyi yerel makinenizde çalıştırmak için aşağıdaki adımları izleyin:
-
-Bu depoyu klonlayın:
-
-git clone https://github.com/edaaerol/epoch-hesaplama.git
-Ana dizine gidin:
-
-cd epoch-hesaplama
-Programı derleyin:
-
-gcc main.c -o epoch_hesaplama
 Kullanım
 Programı çalıştırmak için aşağıdaki komutu kullanın:
 
@@ -28,7 +15,6 @@ Programı çalıştırmak için aşağıdaki komutu kullanın:
 Program çalıştığında, iki farklı tarih ve zaman bilgisi girmenizi isteyecektir. Girdiğiniz değerler doğrulandıktan sonra, program bu tarihleri Epoch zamanına çevirir ve aralarındaki farkı saniye cinsinden hesaplar.
 
 Girdi Örneği:
-Code
 Ilk tarihi giriniz:
 Yil: 2023
 Ay (1-12): 5
