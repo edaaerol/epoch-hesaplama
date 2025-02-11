@@ -54,7 +54,7 @@ Iki tarih arasindaki fark (saniye): 76724085
 ```
 
 ## Fonksiyonlar
-`time_t EpochaCevir(struct Tarih tarih, struct Zaman zaman)`
+`time_t EpochaCevir(struct Tarih tarih, struct Zaman zaman)`→
 Bu fonksiyon, girilen tarih ve zaman bilgilerini alarak Epoch zamanına çevirir.
 
 ## Parametreler
